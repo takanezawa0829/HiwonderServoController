@@ -1,6 +1,9 @@
 # HiwonderServoController
 LSC Series Servo Controller API for Python. At least the LX-225 is confirmed to work.
 
+## Dependence
+pyserial
+
 ## This library contains the following functions:
 * Read angle function
 * Set angle function
