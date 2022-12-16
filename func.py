@@ -25,6 +25,19 @@ def setConfig(set_port = '/dev/ttyUSB0', timeout = 5):
     _serial.stopbits = serial.STOPBITS_ONE
     _serial.timeout = timeout
 
+# move any servo. (id: int[], position: int[], time: int)
+def moveServoArray(id=None,position=None,time=None):
+    buf = bytearray(b'\x55\x55')
+    buf.append(5 + (len(id) * 3))
+    buf.append(CMD_SERVO_MOVE)
+    # # parameters
+    buf.append(len(id))
+    buf.extend([(0xff & time), (0xff & (time >> 8))])
+    for i in range(len(id)):
+        buf.append(id[i])
+        buf.extend([(0xff & position[i]), (0xff & (position[i] >> 8))])
+    _serial.write(buf)
+
 # move the servo. (id: int, position: int, time: int)
 def moveServo(id=None,position=None,time=None):
     buf = bytearray(b'\x55\x55')
